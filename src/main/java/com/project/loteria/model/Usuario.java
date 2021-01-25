@@ -17,23 +17,26 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "usuario")
-@Getter @Setter
+@NoArgsConstructor
+@ToString(exclude="id")
 public class Usuario {
     
     @Id
     @Column
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    @Getter private long id;
 
     @NotNull
     @Column
     @Email
     @NotEmpty
-    private String email;
+    @Getter @Setter private String email;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("usuario")

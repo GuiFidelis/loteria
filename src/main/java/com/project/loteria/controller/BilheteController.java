@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.project.loteria.model.Bilhete;
 import com.project.loteria.repository.BilheteRepository;
+import com.project.loteria.model.Usuario;
+import com.project.loteria.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class BilheteController {
     @Autowired
 	public BilheteRepository bilheteRepository;
+
+	@Autowired
+	public UsuarioRepository usuarioRepository;
 
 	@GetMapping("/todos")
 	public ResponseEntity<List<Bilhete>> getAll() {

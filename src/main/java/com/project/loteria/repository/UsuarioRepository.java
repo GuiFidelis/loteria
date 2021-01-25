@@ -8,5 +8,7 @@ import com.project.loteria.model.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     public List<Usuario> findAllByEmailContainingIgnoreCase(String email);
+    Usuario findByEmail(String email);
+    Usuario findById(long id);
 
 }
