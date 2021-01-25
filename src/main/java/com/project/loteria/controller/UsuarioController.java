@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +24,23 @@ public class UsuarioController {
 
 	@Autowired
 	public UsuarioService usuarioService;
+
+	@GetMapping("/todos")
+	public ResponseEntity<List< Usuario>> buscarTodosUsuarios() {
+		List< Usuario> usuariosBuscados= usuarioService.buscarTodos();
+		return new ResponseEntity<>(usuariosBuscados, HttpStatus.OK);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Usuario> getById(@PathVariable long id){	
+		Usuario usuarioId = usuarioService.buscarPorId(id);
+		if (usuarioId == null) {
+
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}else {
+			return new ResponseEntity<>( usuarioId, HttpStatus.OK);
+		}
+	}
 
 	@PostMapping("/cadastrar")
 		public ResponseEntity<Usuario> post(@RequestBody Usuario usuario) {
@@ -47,12 +63,6 @@ public class UsuarioController {
 			usuarioService.deletar(usuarioEncontrado);
 			return new ResponseEntity<>( HttpStatus.OK);
 		}
-	}
-
-	@GetMapping("/emails")
-	public ResponseEntity<List< Usuario>> buscarTodosUsuarios() {
-		List< Usuario> usuariosBuscados= usuarioService.buscarTodos();
-		return new ResponseEntity<>(usuariosBuscados, HttpStatus.OK);
 	}
 
 }

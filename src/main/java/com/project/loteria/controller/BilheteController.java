@@ -3,16 +3,15 @@ package com.project.loteria.controller;
 import java.util.List;
 
 import com.project.loteria.model.Bilhete;
-import com.project.loteria.repository.BilheteRepository;
-import com.project.loteria.model.Usuario;
-import com.project.loteria.repository.UsuarioRepository;
+import com.project.loteria.service.BilheteService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,25 +19,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/bilhete")
 public class BilheteController {
-    @Autowired
-	public BilheteRepository bilheteRepository;
 
 	@Autowired
-	public UsuarioRepository usuarioRepository;
+	public BilheteService bilheteService;
 
 	@GetMapping("/todos")
-	public ResponseEntity<List<Bilhete>> getAll() {
-		return ResponseEntity.ok(bilheteRepository.findAll());
-	}
-
-	@GetMapping("/id/{id}")
-	public ResponseEntity<Bilhete> getById(@PathVariable Long id) {
-		return bilheteRepository.findById(id).map(resp -> ResponseEntity.ok(resp))
-				.orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<List<Bilhete>> buscarTodosBilhetes() {
+		List<Bilhete> bilhetesBuscados= bilheteService.buscarTodos();
+		return new ResponseEntity<>(bilhetesBuscados, HttpStatus.OK);
 	}
 	
-    @PostMapping
-		public ResponseEntity<Bilhete> post(@RequestBody Bilhete bilhete) {
-			return ResponseEntity.status(HttpStatus.CREATED).body(bilheteRepository.save(bilhete));
+    @PostMapping("/novobilhete")
+	public ResponseEntity<Bilhete> post(@RequestBody Bilhete bilhete) { 
+		Bilhete bilheteCadastrado = bilheteService.cadastrar(bilhete);
+		return new ResponseEntity<>(bilheteCadastrado, HttpStatus.CREATED);
+	}
+
+	@DeleteMapping("/deletar/{id}")
+	public ResponseEntity<Bilhete> deletarBilhete(@PathVariable Long id) {
+		Bilhete bilheteEncontrado = bilheteService.buscarPorId(id);
+		if (bilheteEncontrado == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}else {
+			bilheteService.deletar(bilheteEncontrado);
+			return new ResponseEntity<>( HttpStatus.OK);
+		}
 	}
 }

@@ -43,12 +43,16 @@ public class UsuarioService {
 	}
 
 	public void deletar (Usuario usuario) {
-		//verificaSeTemBilhete(usuario.getId());
 		usuarioRepository.delete(usuario);
 	}
 	
 	public Usuario buscarPorId(long id) {
-		Usuario usuario = usuarioRepository.findById(id);
+		Usuario usuarioId = usuarioRepository.findById(id);
+		return usuarioId;
+	}
+
+	public Usuario buscarPorEmail(String email) {
+		Usuario usuario = usuarioRepository.findByEmail(email);
 		return usuario;
 	}
 

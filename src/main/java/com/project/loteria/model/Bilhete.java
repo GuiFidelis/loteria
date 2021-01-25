@@ -16,12 +16,15 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "bilhete")
 @Getter @Setter
-    
+@NoArgsConstructor
+@ToString(exclude="id")    
 public class Bilhete {
     
     @Id

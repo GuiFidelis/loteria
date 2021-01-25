@@ -7,5 +7,7 @@ import com.project.loteria.model.Bilhete;
 
 @Repository
 public interface BilheteRepository extends JpaRepository<Bilhete, Long> {
-    public List<Bilhete> findAllBynumeroBilheteContainingIgnoreCase(String numerobilhete);
+    public List<Bilhete> findAllBynumeroBilheteContaining(String numeroBilhete);
+    Bilhete findByNumeroBilhete(String numeroBilhete);
+    Bilhete findById(long id);
 }

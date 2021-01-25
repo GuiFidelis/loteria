@@ -25,18 +25,19 @@ import lombok.ToString;
 @Table(name = "usuario")
 @NoArgsConstructor
 @ToString(exclude="id")
+@Getter @Setter 
 public class Usuario {
     
     @Id
     @Column
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Getter private long id;
+    private long id;
 
     @NotNull
     @Column
     @Email
     @NotEmpty
-    @Getter @Setter private String email;
+    private String email;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("usuario")
