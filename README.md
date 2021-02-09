@@ -1,7 +1,5 @@
 # Projeto Loteria
 
---- 
-
 ## 📖 Sobre 
 
 Este é um projeto desenvolvido para uma das etapas do processo seletivo da **[Orange Talents - ZUP](https://www.zup.com.br/orange-talents)**, em que o sistema utilizando seja implementado seja em Java como linguagem e Spring + Hibernate como stacks de tecnologia fundamentais da aplicação
